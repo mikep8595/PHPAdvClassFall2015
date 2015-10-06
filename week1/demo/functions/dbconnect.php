@@ -19,7 +19,7 @@ function dbconnect() {
     } catch (Exception $ex) {
         /* If the connection fails we will close the 
          * connection by setting the variable to null */
-        $db = null; //clears out DB connection
+        $db = null;
         $message = $ex->getMessage();
         var_dump($message);
         exit();
