@@ -35,17 +35,21 @@
             
             if ( $util->isPostRequest() ) {
                 $user_id = $login->loginChk($email, $password);
-            
-            
-                if ($user_id > 0)
-                {
+                      
+                if (isset($user_id)) {
                     $_SESSION['user_id'] = $user_id;  
                     header('Location: admin.php');
+                    exit();
                 }
-                
-                
+                else{
+                    $message = 'Login failed';
+                    
+                }
             }
         ?>
+        
+        <?php include './templates/errors.html.php'; ?>
+        <?php include './templates/messages.html.php'; ?>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
               <!-- Brand and toggle get grouped for better mobile display -->
@@ -60,15 +64,13 @@
               </div>
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav">
-                      <li><a href="./index.php">Login</a></li>
-                      <li><a href="./signup.php">Signup</a></li>
-                      <?php 
-                        if (isset($_SESSION['user_id']) )
-                        {
-                            echo '<li><a href="./admin.php">admin</a></li>';
-                            
-                        }
-                      ?>
+                    <li><a href="./index.php">Login</a></li>
+                    <li><a href="./signup.php">Signup</a></li>
+                    <?php if (isset($_SESSION['user_id']) )  :?>
+
+                         <li><a href="./admin.php">Admin</a></li>
+
+                    <?php endif; ?>
                   </ul>
               </div>
             </div>

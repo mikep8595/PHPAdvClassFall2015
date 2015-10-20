@@ -11,7 +11,22 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        // put your code here
+        
+            if (isset($_SESSION['user_id'])){
+                
+            }
+            else{
+                header('Location: ./index.php');
+                exit();
+            }
+     
+            $util = new Util();
+            if ( $util->isPostRequest() ) {
+                if (!isset ($_SESSION['user_id'])){
+                    header('Location: ./index.php');
+                    exit();
+                }
+            }
         ?>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -29,17 +44,16 @@ and open the template in the editor.
                   <ul class="nav navbar-nav">
                       <li><a href="./index.php">Login</a></li>
                       <li><a href="./signup.php">Signup</a></li>
-                      <?php 
-                        if (isset($_SESSION['user_id']) )
-                        {
-                            echo '<li><a href="./admin.php">admin</a></li>';
-                            
-                        }
-                      ?>
+                      <li><a href="./admin.php">Admin</a></li>                                                                      
                   </ul>
               </div>
             </div>
 
         </nav>
+        
+        <form action="#" method="post">
+            <input type="submit" value="Loggout" class="btn btn-primary" />
+            
+        </form>
     </body>
 </html>
