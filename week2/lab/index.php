@@ -10,23 +10,10 @@
     </head>
     <body>
         <?php
-       
+            // Loads new instances of classes
             $util = new Util();
             $dbc = new DB($util->getDBConfig());
             $db = $dbc->getDB();
-            
-            /*
-            $stmt = $db->prepare("UPDATE test set dataone = :dataone, datatwo = :datatwo where id = :id");
-                
-            $binds = array(
-                ":id" => $id,
-                ":dataone" => $dataone,
-                ":datatwo" => $datatwo
-            );
-
-            if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
-               $result = 'Record updated';
-            }*/
             
             $login = new Login();
             
@@ -49,7 +36,7 @@
                 }
             }
         ?>
-        
+        <!-- Loads page elements -->
         <?php include './templates/errors.html.php'; ?>
         <?php include './templates/messages.html.php'; ?>
         <?php include './templates/nav-bar.php'; ?>

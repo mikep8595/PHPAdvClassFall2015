@@ -13,16 +13,19 @@
        
             $email= filter_input(INPUT_POST, 'email');
             $password = filter_input(INPUT_POST, 'password');
+            //refill and grabs variables on page reload
             
-            
+            //new instances of classes.
             $util = new Util();
             $validtor = new Validator();
             $signup = new Signup();
             
             $errors = array();
+            //loads erros into array
             
             if ( $util->isPostRequest() ) {
              
+                //Validates fields and throws found errors into an array.
                 if ( !$validtor->emailIsValid($email) ) {
                     $errors[] = 'Email is not valid';
                 }
@@ -33,9 +36,9 @@
                     $errors[] = 'Password is not valid';
                 }
                 
-                
+                //If no errors are found...
                 if ( count($errors) <= 0) {
-                
+                    //insert it into the database!
                     if ( $signup->save($email,$password) ) {
                         $message = 'Signup complete';
                     } else {
@@ -50,7 +53,7 @@
             
             
         ?>
-        
+        <!-- Loads page elements -->
         <?php include './templates/errors.html.php'; ?>
         <?php include './templates/messages.html.php'; ?>
         <?php include './templates/nav-bar.php'; ?>
