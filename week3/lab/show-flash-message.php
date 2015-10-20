@@ -14,42 +14,23 @@ and open the template in the editor.
         <!-- Optional theme -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     </head>
-    <body>                
+    <body>
         <h1>Messages<small class="text-warning">Flash</small></h1>
         
         <div class="text-warning">
             <blockquote>
         <?php
-            session_start();
-            
-            /*$_SESSION['flashmessages'] = array(
-                'testing' => 'Flash Message Text'
-                
-            );*/
-            
             include './models/IMessage.php';
             include'./models/Message.php';
             include './models/FlashMessage.php';
-
-
+        
             $flashMessage = new FlashMessage();
-
-            $flashMessage->addMessage('test1', 'yay1');
-            $flashMessage->addMessage('test2', 'yay2');
-            $flashMessage->addMessage('test3', 'yay3');
-
-            //var_dump($flashMessage->getAllMessages());
-            echo '<br />';
-            var_dump($flashMessage instanceof IMessage);
-            echo '<br />';
-            //var_dump($flashMessage->removeMessage('test'));
-            echo '<br />';
-            //var_dump($flashMessage->getAllMessages());
-             echo '<br />';
-             
-             var_dump($_SESSION);
+            
+            $messages = $flashMessage-getAllMessage();
+            
+            print_r($messages);
         ?>
-        </blockquote>
+                </blockquote>
         </div>
     </body>
 </html>
