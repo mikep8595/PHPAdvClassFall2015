@@ -9,27 +9,27 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title></title>
-        <?php require './templates/head-links.php'; ?>
+        <?php require './templates/head-links.php'; ?> <!-- Used to bring in bootstrap-->
     </head>
     <body>
         <?php
         
      
             $util = new Util();
-            if ( $util->isPostRequest() ) {
+            if ( $util->isPostRequest() ) { //if the their has been a post request...
                 
-                if (isset ($_SESSION['user_id'])){
-                    session_destroy();
-                    header('Location: ./index.php');
+                if (isset ($_SESSION['user_id'])){ //and there has a user_id set in the session ..
+                    session_destroy();// destroy the sesssion because we want to log out.
+                    header('Location: ./index.php'); // and bring us back to the login page.
                     exit();
                 }
             }
         ?>
-        <?php include './templates/nav-bar.php'; ?>
+        <?php include './templates/nav-bar.php'; ?> <!-- bring in the nav bar -->
         
-        <form action="#" method="post">
+        <form action="#" method="post"> 
             <input type="submit" value="Loggout" class="btn btn-primary" />
-            
+            <!-- and make the loggout button -->
         </form>
     </body>
 </html>

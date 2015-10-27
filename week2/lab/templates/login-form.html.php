@@ -1,4 +1,4 @@
-  
+<!-- Contains form used for logging in and signing up for the users -->  
 <form action="#" method="post">   
     Email: <input type="text" name="email" value="<?php echo $email; ?>" /> <br />
     Password: <input type="password" name="password" value="" /> <br />

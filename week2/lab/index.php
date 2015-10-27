@@ -17,21 +17,21 @@
             
             $login = new Login();
             
-            $email= filter_input(INPUT_POST, 'email');
-            $password= filter_input(INPUT_POST, 'password');
+            $email= filter_input(INPUT_POST, 'email'); // brings in the email..
+            $password= filter_input(INPUT_POST, 'password');// and the password off the post request.
             
             if ( $util->isPostRequest() ) {
-                $user_id = $login->loginChk($email, $password);
+                $user_id = $login->loginChk($email, $password); // sets the user__id to the database information returned.
                       
-                if (isset($user_id)) {
-                    $_SESSION['user_id'] = $user_id;
-                    $message = 'Login successful';
-                    header('Location: admin.php');
+                if (isset($user_id)) { // if the user_id is set..
+                    $_SESSION['user_id'] = $user_id;//.. put the id into a variable in the session..
+                    $message = 'Login successful'; //.. create a $message which will display in the header..
+                    header('Location: admin.php'); // and go to the admin page.
                   
                     exit();
                 }
                 else{
-                    $message = 'Login failed';
+                    $message = 'Login failed'; // OR display a failiure mail.
                     
                 }
             }
