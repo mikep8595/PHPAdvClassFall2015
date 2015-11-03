@@ -5,85 +5,11 @@ header("Access-Control-Allow-Methods: GET, POST, UPDATE, DELETE");
 header("Content-Type: application/json; charset=utf8"); //will be outputing json
 
 try {
-    $status = 200; //lets you know protocol of the page.
-    $status_codes = array(  
-        200 => 'OK',
-        201 => 'Created',
-        202 => 'Accepted',
-        400 => 'Bad Request',
-        401 => 'Unauthorized',
-        403 => 'Access Forbidden',
-        404 => 'Not Found',
-        409 => 'Conflict',
-        500 => 'Internal Server Error',
-    );
-    $response = array(       
-        "message" => NULL,
-        "errors" => NULL,
-        "data" => NULL
-    );
-
-
-    /*
-     * Lets use the endpoint to get the resource to access and the ID
-     * e.g. phoneTypes/4
-     * resource = phoneTypes
-     * id = 4
-     */
-    $endpoint = filter_input(INPUT_GET, 'endpoint');
-    $restArgs = explode('/', rtrim($endpoint, '/'));    
-    $resource = array_shift($restArgs);
-    $id = NULL;
-    
-    if ( isset($restArgs[0]) && is_numeric($restArgs[0]) ) {
-        $id = intval($restArgs[0]);
-    }
-    
-    
-    /*
-     * Lets get the verb to know what action the user wants to perform
-     */
-    
-    $verb = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
-    $verbs_allowed = array('GET','POST','PUT','DELETE');
-    
-    if ( !in_array($verb, $verbs_allowed) ) {
-        throw new Exception("Unexpected Header Requested ". $verb);
-    }
-  
-
     /*
     * set 'always_populate_raw_post_data = -1' so you can pass json
     * to your rest server instead of post data  
     *
     */
-    if( strpos(filter_input(INPUT_SERVER, 'CONTENT_TYPE'), "application/json") !== false) {
-        $data = json_decode(trim(file_get_contents('php://input')), true);
-
-
-        switch ( json_last_error() ) {
-                case JSON_ERROR_NONE:
-                { //data UTF-8 compliant
-                  //tell client to recieve JSON data and send           
-                }
-                break;
-                case JSON_ERROR_SYNTAX:
-                case JSON_ERROR_UTF8:
-                case JSON_ERROR_DEPTH:
-                case JSON_ERROR_STATE_MISMATCH:
-                case JSON_ERROR_CTRL_CHAR:
-                    throw new Exception(json_last_error_msg());           
-                break;
-                default:
-                   throw new Exception('JSON encode error Unknown error');
-                break;
-            }
-
-           
-    }
-    
-    
-    
     
     $config = array(
         'DB_DNS' => 'mysql:host=localhost;port=3306;dbname=PHPAdvClassFall2015',
