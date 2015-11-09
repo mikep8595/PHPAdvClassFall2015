@@ -61,15 +61,45 @@ class FileHandler {
         return $size;
     }
              
-    private function fileErrs($errFile){
-        // Undefined | Multiple Files | $_FILES Corruption Attack
-            // If this request falls under any of them, treat it invalid.
-            if ( !isset($_FILES[$errFile]['error']) || is_array($_FILES[$errFile]['error']) ) {       
-                throw new RuntimeException('Invalid parameters.');
-            }
+    private function fileErrs($errFile){     
+        $this->errCheck($errFile);
 
-            // Check $_FILES[$errFile]['error'] value.
-            switch ($_FILES[$errFile]['error']) {
+        // Check MIME Type by yourself. -- MIME type is the file extension.
+        // DO NOT TRUST $_FILES[$fileKey]['mime'] VALUE !!    
+        $finfo = new finfo(FILEINFO_MIME_TYPE); 
+        $validExts = array( 
+                        'jpg' => 'image/jpeg',
+                        'png' => 'image/png',
+                        'gif' => 'image/gif',
+                        'pjpeg' => 'image/pjpeg',
+                        'plain' => 'text/plain',
+                        'html' => 'text/html',
+                        'pdf' => 'application/pdf',
+                        'msword' => 'application/msword',
+                        'vnd.ms-excel' => 'application/vnd.ms-excel'
+                    );    
+        //when php access a file, is puts it in a temp folder, so to make sure it isnt harmfull.
+        $ext = array_search( $finfo->file($_FILES[$errFile]['tmp_name']), $validExts, true );
+        // checks that the file type is actually valid...
+
+        if ( false === $ext ) { //.. and if not it throws an excemption.
+            throw new RuntimeException('Invalid file format.');
+        }                   
+        // You should name it uniquely.
+        // DO NOT USE $_FILES[$fileKey]['name'] WITHOUT ANY VALIDATION !!
+        // On this example, obtain safe unique name from its binary data.
+
+        return $ext;
+
+    }
+    
+    private function errCheck($errFile)
+    {
+        if ( !isset($_FILES[$errFile]['error']) || is_array($_FILES[$errFile]['error']) ) { // Undefined | Multiple Files | $_FILES Corruption Attack      
+            throw new RuntimeException('Invalid parameters.'); // If this request falls under any of them, treat it invalid.
+        }
+        
+        switch ($_FILES[$errFile]['error']) {// Check $_FILES[$errFile]['error'] value.
                 case UPLOAD_ERR_OK: //continues
                     break;
                 case UPLOAD_ERR_NO_FILE: // if not file
@@ -80,30 +110,11 @@ class FileHandler {
                 default:
                     throw new RuntimeException('Unknown errors.');
             }
-            // You should also check filesize here. 
-            if ($this->getFileSize($errFile) > 1000000) { //makes sure that file does not exceed certain size.
-                throw new RuntimeException('Exceeded filesize limit.'); // throws exception.
-            }   
-            // DO NOT TRUST $_FILES[$fileKey]['mime'] VALUE !!
-            // Check MIME Type by yourself. -- MIME type is the file extension.
-            $finfo = new finfo(FILEINFO_MIME_TYPE);
-            $validExts = array(
-                            'jpg' => 'image/jpeg',
-                            'png' => 'image/png',
-                            'gif' => 'image/gif'
-                        );    
-            //when php access a file, is puts it in a temp folder, so to make sure it isnt harmfull.
-            $ext = array_search( $finfo->file($_FILES[$errFile]['tmp_name']), $validExts, true );
-            // checks that the file type is actually valid...
-
-            if ( false === $ext ) { //.. and if not it throws an excemption.
-                throw new RuntimeException('Invalid file format.');
-            }                   
-            // You should name it uniquely.
-            // DO NOT USE $_FILES[$fileKey]['name'] WITHOUT ANY VALIDATION !!
-            // On this example, obtain safe unique name from its binary data.
-            
-            return $ext;
-
+        
+        // You should also check filesize here. 
+        if ($this->getFileSize($errFile) > 1000000) { //makes sure that file does not exceed certain size.
+            throw new RuntimeException('Exceeded filesize limit.'); // throws exception.
+        } 
+        
     }
 }

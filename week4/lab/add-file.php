@@ -8,9 +8,26 @@
     </head>
     <body>
         <?php
-        // put your code here
+            //create a new instance of classes.
+            $upload = new FileHandler();
+            $util = new Util();
+            
+            //Grabs file directory
+            $folder = './uploads';
+            
+            //$upfile= filter_input(INPUT_POST, 'upfile');
+            
+            //if an image has been posted
+            if( $util->isPostRequest() )
+            {
+                //add it.
+               include './templates/upload.php';
+            }
+            
         ?>
-         <?php include './templates/nav-bar.php';?>
-         <?php include './templates/add-file-form.php';?>
+        <!-- include page elements.-->
+        <?php include './templates/messages.html.php'; ?>
+        <?php include './templates/nav-bar.php';?>
+        <?php include './templates/add-file-form.php';?>
     </body>
 </html>
