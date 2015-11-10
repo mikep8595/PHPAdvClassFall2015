@@ -116,24 +116,7 @@ class RestServer {
         $this->getRestArgs();
         $this->setVerb();
         $this->setServer_data();
-    }
-    
-//    private function setID(){
-//        $endpoint = filter_input(INPUT_GET, 'endpoint');
-//        $restArgs = explode('/', rtrim($endpoint, '/'));   
-//        
-//        if ( isset($restArgs[0]) && is_numeric($restArgs[0]) ) {
-//            $this->id = intval($restArgs[0]);
-//        }
-//        
-//    }
-//    
-//    private function setResource(){
-//        $endpoint = filter_input(INPUT_GET, 'endpoint');
-//        $restArgs = explode('/', rtrim($endpoint, '/'));    
-//        $this->resource = array_shift($restArgs);
-//        
-//    }
+    }   
     
     private function getRestArgs() {
         $endpoint = filter_input(INPUT_GET, 'endpoint');

@@ -12,5 +12,13 @@
         ?>
         <?php include './templates/index-form.php';?>
         <?php include './templates/nav-bar.php';?>
+        
+        Verb/HTTP Method:<br />
+        <select name="verb">
+            <option value="GET">GET</option>
+            <option value="POST">POST</option>
+            <option value="PUT">PUT</option>
+            <option value="DELETE">DELETE</option>
+        </select>
     </body>
 </html>

@@ -1,7 +1,9 @@
 'use strict';
   
 var appDirectives = angular.module('appDirectives', []);
- 
+
+//$document help to throw different errors for different browswers
+//myDraggable needs to be camel case here and done as my-draggable in the index
 appDirectives.directive('myDraggable', ['$document', function($document) {
     return function(scope, element, attr) {
       var startX = 0, startY = 0, x = 0, y = 0;
