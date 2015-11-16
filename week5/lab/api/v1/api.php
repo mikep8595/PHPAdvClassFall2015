@@ -42,12 +42,12 @@ try {
                 
                 $restServer->setData( $corpsResource->getAll() );               
             } else {                
-                    $restServer->setData($corpsResource->get($id));
+                $restServer->setData($corpsResource->get($id));
             }                       
         }
                 
         if ( 'POST' === $verb ) {           
-            $restServer->setMessage( $corpsResource->post($data) );
+            $restServer->setMessage( $corpsResource->post($serverdata) );
             $restServer->setStatus(201);                 
         }        
         
@@ -55,7 +55,7 @@ try {
             if ( NULL === $id ) {
                 throw new InvalidArgumentException('Corporation ID ' . $id . ' was not found');
             } else {
-                $restServer->setMessage($corpsResource->put($id, $data));
+                $restServer->setMessage($corpsResource->put($id, $serverdata));
                 $restServer->setStatus(201);               
             }           
         }

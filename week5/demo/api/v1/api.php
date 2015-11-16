@@ -1,15 +1,9 @@
 <?php
 
-header("Access-Control-Allow-Orgin: *"); //who is allowed to access this page
-header("Access-Control-Allow-Methods: GET, POST, UPDATE, DELETE");
-header("Content-Type: application/json; charset=utf8"); //will be outputing json
+
 
 try {
-    /*
-    * set 'always_populate_raw_post_data = -1' so you can pass json
-    * to your rest server instead of post data  
-    *
-    */
+    
     
     $config = array(
         'DB_DNS' => 'mysql:host=localhost;port=3306;dbname=PHPAdvClassFall2015',
@@ -19,10 +13,6 @@ try {
     
     $db = new PDO($config['DB_DNS'], $config['DB_USER'], $config['DB_PASSWORD']);
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    
-    
-    
-    
     
     
     
@@ -100,5 +90,5 @@ try {
 
 
 
-header("HTTP/1.1 " . $status . " " . $status_codes[$status]);
-echo json_encode($response, JSON_PRETTY_PRINT);
+
+

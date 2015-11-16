@@ -34,7 +34,7 @@ class AddressResoruce implements IRestModel {
     
     public function get($id) {
        
-        $stmt = $db->prepare("SELECT * FROM address where address_id = :address_id");
+        $stmt = $this->getDb()->prepare("SELECT * FROM address where address_id = :address_id");
         $binds = array(":address_id" => $id);
 
         $results = array(); 
@@ -48,7 +48,7 @@ class AddressResoruce implements IRestModel {
     
     public function post($serverData) {
         /* note you should validate before adding to the data base */
-        $stmt = $db->prepare("INSERT INTO address SET fullname = :fullname, email = :email, addressline1 = :addressline1, city = :city, state = :state, zip = :zip, birthday = :birthday");
+        $stmt = $this->getDb()->prepare("INSERT INTO address SET fullname = :fullname, email = :email, addressline1 = :addressline1, city = :city, state = :state, zip = :zip, birthday = :birthday");
         $binds = array(
             ":fullname" => $serverData['fullname'],
             ":email" => $serverData['email'],
