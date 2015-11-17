@@ -8,6 +8,7 @@ require_once './autoload.php';
 
 class CorpsResoruce implements IRestModel{
     
+    
     private $db;
 
     function __construct() {
@@ -36,11 +37,12 @@ class CorpsResoruce implements IRestModel{
             ":phone" => $data['phone'],
             ":location" => $data['location']
         );
-
-        if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
-            return 'Corporation Added';
-        } else {
-            throw new Exception('Corporation could not be added');
+        if($this->dataCheck($data) === true){
+            if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
+                return 'Corporation Added';
+            } else {
+                throw new Exception('Corporation could not be added');
+            }
         }
     }
        
@@ -82,11 +84,12 @@ class CorpsResoruce implements IRestModel{
             ":location" => $data['location'],
             ":id" => $id
         );
-
-        if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
-            return 'Corporation Updated';
-        } else {
-            throw new Exception('Corporation could not be updated');
+        if($this->dataCheck($data) === true){
+            if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
+                return 'Corporation Updated';
+            } else {
+                throw new Exception('Corporation could not be updated');
+            }
         }
         
     }
@@ -100,5 +103,39 @@ class CorpsResoruce implements IRestModel{
         } else {
             throw new InvalidArgumentException('Corporation ID ' . $id . ' was not found');
         }
+    }
+    
+    public function dataCheck($data) {
+        $errors = array();
+        $message = "";
+        if ($data['corp'] === '' ){
+            $errors[] = 'No Corporation Name ';
+        }
+        if ($data['incorp_dt'] === '' ){
+            $errors[] = 'No Incorporation Date ';
+        }
+        if ($data['email'] === '' ){
+            $errors[] = 'No Email ';
+        }
+        if ($data['owner'] === '' ){
+            $errors[] = 'No Owner ';
+        }
+        if ($data['phone'] === '' ){
+            $errors[] = 'No Phone ';
+        }
+        if ($data['location'] === '' ){
+            $errors[] = 'No Location';
+        }
+        if (count($errors) > 0)
+        {
+            foreach ($errors as $err){
+                $message = $message + $err;
+            }
+            throw new Exception('Form not fully filled');
+        }
+        else{
+            return true;
+        }
+        
     }
 }

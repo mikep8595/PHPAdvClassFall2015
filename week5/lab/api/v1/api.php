@@ -47,7 +47,7 @@ try {
         }
                 
         if ( 'POST' === $verb ) {           
-            $restServer->setMessage( $corpsResource->post($serverdata) );
+            $restServer->setMessage( $corpsResource->post($serverData) );
             $restServer->setStatus(201);                 
         }        
         
@@ -55,7 +55,7 @@ try {
             if ( NULL === $id ) {
                 throw new InvalidArgumentException('Corporation ID ' . $id . ' was not found');
             } else {
-                $restServer->setMessage($corpsResource->put($id, $serverdata));
+                $restServer->setMessage($corpsResource->put($id, $serverData));
                 $restServer->setStatus(201);               
             }           
         }

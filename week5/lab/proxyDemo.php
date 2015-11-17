@@ -17,7 +17,7 @@
             }
         </style>
         
-        <h1>Rest API Demo</h1>
+        <h1>Corporation Rest api</h1>
         
         Verb/HTTP Method:<br />
         <select name="verb">
@@ -64,7 +64,6 @@
                 var verb = verbfield.options[verbfield.selectedIndex].value;
                 var resource = document.querySelector('input[name="resource"]').value;
                 var data = {
-                    //'id' : document.querySelector('input[name="id"]').value,
                     'corp' : document.querySelector('input[name="corp"]').value,
                     'email' : document.querySelector('input[name="email"]').value,
                     'owner' : document.querySelector('input[name="owner"]').value,
