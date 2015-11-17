@@ -33,8 +33,6 @@
         <br />
         <br />
         Data(optional):<br /> 
-<!--        id <input type="number" pattern="[0-9]*" name="id" value="" />
-        <br />-->
         Corporation <input type="text" name="corp" value="" />
         <br />
         Email <input type="email" name="email" value="" />
