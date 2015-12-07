@@ -128,7 +128,7 @@
             function makeAJAXCall(data) {  
                 var verb = 'POST';
                 var url = 'upload.php';
-                var formData = new FormData();
+                var formData = new FormData(); //sends data as if it was sending a form to ajax.
                 formData.append('upfile', data);
                 
                 xmlhttp.open(verb, url, true);
