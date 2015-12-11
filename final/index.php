@@ -19,23 +19,16 @@ $db = $dbc->getDB();
 
 $login = new Login();
 
+$loginCode = '';
+
     $email= filter_input(INPUT_POST, 'email'); // brings in the email..
     $password= filter_input(INPUT_POST, 'password');// and the password off the post request.
     
-    if ( $util->isPostRequest() ) {
-        $user_id = $login->loginChk($email, $password); // sets the user__id to the database information returned.
-
-        if (isset($user_id)) { // if the user_id is set..
-            $_SESSION['user_id'] = $user_id;//.. put the id into a variable in the session..
-            $message = 'Login successful'; //.. create a $message which will display in the header..
-            header('Location: admin.php'); // and go to the admin page.
-
-            exit();
-        }
-        else{
-            $message = 'Login failed'; // OR display a failiure mail.
-
-        }
+    if ( $_SESSION['user_id'] === '' ) {       
+        
+    }
+    else {
+        $loginCode = 'Login';
     }
 
 ?>
@@ -69,14 +62,15 @@ $login = new Login();
         </style>
     </head>
     <body>
+        <?php include './templates/messages.html.php'; ?>
         <div style="float: right;">
-            <form action="#" method="post">
-                <input type="text" placeholder="Username" name="email" value=""/> <br />
-                <input type="text" placeholder="Password" name="password" value=""/>
-                <br />
-                <a link="signup.php">Sign Up</a>
-                <input type="button" value="Submit" />
-            </form>
+            <a href="login.php"><?php if ($loginCode != ''){echo $loginCode;} else{echo "Login";} ?></a>
+            <?php if ($_SESSION['user_id'] != NULL):?>
+                <p>Username = <?php echo $_SESSION['user_id'];?></p>
+            <?php endif; ?>
+            <?php if ($_SESSION['user_id'] === ''): ?> 
+                <a href="login.php"><?php if ($loginCode != ''){echo $loginCode;} else{echo "Login";} ?></a>
+            <?php endif; ?>
         </div>
         <h2>Image Files</h2>
         <p>

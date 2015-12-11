@@ -8,7 +8,7 @@
 <?php if (isset($alert) && $alert === false) : ?>
     <div class="alert alert-warning alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Warning!</strong> Errors found. Data not entered.
+        <strong>Warning!</strong> <?php echo $errorMessage ?>
     </div> 
 <?php endif; ?>
 

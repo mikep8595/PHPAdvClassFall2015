@@ -4,7 +4,7 @@
  * without having to include them on the page. 
  */
 function load_lib($class) {
-    include '.lab/api/v1/models/'.$class . '.php';
+    include './models/'.$class . '.php';
 };
 spl_autoload_register('load_lib');
 session_start();

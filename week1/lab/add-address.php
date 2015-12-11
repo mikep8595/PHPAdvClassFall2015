@@ -9,7 +9,8 @@
         ?>
     </head>
     <body>
-        <?php       
+        <?php   
+        include './views/messages.html.php';
         include_once './functions/dbconnect.php'; 
         include_once './functions/until.php'; 
             // put your code here
@@ -24,15 +25,8 @@
             
         $regex = "/^[a-z ,.'-]+$/i";
         $emailregex = "/\A[^@]+@([^@\.]+\.)+[^@\.]+\z/";
-        $addressline1regex = "\d{1,5}\s\w.\s(\b\w*\b\s){1,2}\w*\ ";
-        $errorname = true;
-        $erroremail = true;
-        $erroraddress = true;
-        $errorcity = true;
-        $errorstate = true;
-        $errorzip = true;
-        $errorbirth = true;
-        $errormessage = '';
+        $addressline1regex = "\d{1,5}\s\w.\s(\b\w*\b\s){1,2}\w*\ ";       
+        $ERRmessage = '';
         
         $errors = array (
             'group-success' => 'has-success has-feedback',
@@ -41,191 +35,169 @@
             
         );
         /* Defines in-tag variabes to change success status */
-        $fullnamegroup_success = '';
-        $fullname_success = '';
-        $emailgroup_success = '';
-        $email_success = '';
-        $addressline1group_success = '';
-        $addressline1_success = '';
-        $citygroup_success = '';
-        $city_success = '';         
-        $stategroup_success = '';
-        $state_success = '';
-        $zipgroup_success = '';
-        $zip_success = '';
-        $birthdaygroup_success = '';
-        $birthday_success = '';
         
-        if ( isPostRequest() ) {                    
+        
+        
+        if ( isPostRequest() ) {   
+            try{
             
-            if (isset($fullname) )
+            if ($fullname !== '')
             {
                 if (is_string($fullname))
                 {
                     if (preg_match($regex, $fullname))
-                    { 
-                       $fullnamegroup_success = $errors['group-success'];
+                    {                        
                        
-                       $errorname = false;
                     }
                     else
-                    {$fullnamegroup_success = $errors['group-error'];
-                    $errorname = true;
+                    {
+                    
+                    $ERRmessage .= 'Name is not in valid format <br>';
                     }
                 }
                 else
-                {$fullnamegroup_success = $errors['group-error'];
-                $errorname = true;
+                {
+                
+                $ERRmessage .= 'Name is not in valid format <br>';
                 }
             }
             else
-            {$fullnamegroup_success = $errors['group-error'];
-            $errorname = true;
+            {
             
+                $ERRmessage .= 'Name is not filled in <br>';
             }
             
-            if (isset($email) )
+            if ($email !== '' )
             {
                 if (is_string($email))
                 {
                     if (preg_match($emailregex, $email))
                     {
-                       $emailgroup_success = $errors['group-success'];
                        
-                       $erroremail = false;
                     }
                     else
-                    {$emailgroup_success = $errors['group-error'];
-                    $erroremail = true;
+                    {
+                        
+                        $ERRmessage .= 'Email is not in valid format <br>';
                     }
                 }
                 else
-                {$emailgroup_success = $errors['group-error'];
-                $erroremail = true;
+                {
+                
+                $ERRmessage .= 'Email is not in valid format <br>';
                 }
             }
             else
-            {$emailgroup_success = $errors['group-error'];
-            $erroremail = true;
+            {
+            
+                $ERRmessage .= 'Email is not filled in <br>';
             } 
             
-            if (isset($addressline1) )
+            if ($addressline1 !== '' )
             { 
                 if (is_string($addressline1))
                 {
-                  //if (preg_match($addressline1regex, $addressline1))
-                   // {
-                       $addressline1group_success = $errors['group-success'];
-                       
-                       $erroraddress = false;
-                    //}
-                   // else
-                    //{$addressline1group_success = $errors['group-error'];
-                    //$error = true;
-                    //}
+                    $erroraddress = false;              
                 }
                 else
-                {$addressline1group_success = $errors['group-error'];
-                $erroraddress = true;
+                {
+                    $erroraddress = true;
+                    $ERRmessage .= 'Address is not in valid format. <br>';
                 }
             }
             else
-            {$addressline1group_success = $errors['group-error'];
-            $erroraddress = true;
+            {
+                $erroraddress = true;
+                $ERRmessage .= 'Address is not filled in. <br>';
+
             }
             
-            if (isset($city) )
+            if ($city !== '' )
             {
                 if (is_string($city))
-                {                  
-                    $citygroup_success = $errors['group-success'];
+                {                                     
                     $errorcity = false;                   
                 }
                 else
-                {$citygroup_success = $errors['group-error'];
-                $errorcity = true;
+                {
+                    $errorcity = true;
+                    $ERRmessage .= 'City is not in valid format <br>';
                 }
             }
             else
-            {$citygroup_success = $errors['group-error'];
-            $errorcity = true;
+            {
+                $errorcity = true;
+                $ERRmessage .= 'City is not filled in <br>';
             } 
             
-            if (isset($state) )
+            if ($state !== '' )
             {
                 if (is_string($state))
                 {   
                     $state = strtoupper($state);
-                    $stategroup_success = $errors['group-success'];
-                    $errorstate = false;                   
+                    
+                    $errorstate = false; 
+                    
                 }
                 else
-                {$stategroup_success = $errors['group-error'];
-                $errorstate = true;
+                {
+                    $errorstate = true;
+                    $ERRmessage .= 'State is not in valid format <br>';
                 }
             }
             else
-            {$stategroup_success = $errors['group-error'];
-            $errorstate = true;
+            {
+                $errorstate = true;
+                $ERRmessage .= 'State is not in valid format <br>';
             }
             
-            if (isset($zip) )
+            if ($zip !== '' )
             {
                 if (is_string($zip))
                 {                  
-                    $zipgroup_success = $errors['group-success'];
+                    
                     $errorzip = false;                   
                 }
                 else
                 {
-                    $zipgroup_success = $errors['group-error'];
+                    $ERRmessage .= 'Zip code is not in valid format <br>';
                     $errorzip = true;
                 }
             }
             else
-            {$zipgroup_success = $errors['group-error'];
-            $errorzip = true;
-            }
-            
-            if (isset($city) )
             {
-                if (is_string($city))
-                {                  
-                    $citygroup_success = $errors['group-success'];
-                    $errorzip = false;                   
-                }
-                else
-                {$citygroup_success = $errors['group-error'];
                 $errorzip = true;
-                }
+                $ERRmessage .= 'Zip code is filled in <br>';
             }
-            else
-            {$citygroup_success = $errors['group-error'];
-            $errorzip = true;
-            }
-            
-            if (isset($birthday) )
+                                    
+            if ($birthday !== '' && $birthday !== 'mm/dd/yy')
             {
                 if (is_string($birthday))
                 {   
-                    $time = strtotime($birthday);
-                    $datestringpost = date('Y-m-d',$time);
-                    $birthdaygroup_success = $errors['group-success'];
-                    $errorbirth = false;                   
+                    if ($birthday !== 'mm/dd/yy') {
+                        $time = strtotime($birthday);
+                        $datestringpost = date('Y-m-d',$time);
+                    
+                        $errorbirth = false;
+                    }
+                    else {
+                        $ERRmessage .= 'Birthday is not in valid format <br>';
+                    }
+                    
                 }
                 else
-                {$birthdaygroup_success = $errors['group-error'];
-                $errorbirth = true;
-                
+                {
+                    $errorbirth = true;
+                    $ERRmessage .= 'Birthday is not in valid format <br>';
                 }
             }
             else
-            {$birthdaygroup_success = $errors['group-error'];
-            $errorbirth = true;
-            
+            {
+                $errorbirth = true;
+                $ERRmessage .= 'Birthday is not filled in. <br>';
             }
             
-            if ($errorname === false && $erroremail === false && $erroraddress === false && $errorcity === false && $errorstate === false && $errorzip === false && $errorbirth === false)
+            if ($ERRmessage === '')
             {
                 if ( addAddress($fullname, $email, $addressline1, $city, $state, $zip, $datestringpost) === true)
                 {
@@ -235,24 +207,21 @@
                 }
                 else 
                 {   
-                    $alert = false; 
-                    $fullname = $errormessage;
-                    $email = '';
-                    $addressline1 = '';
-                    $city = '';
-                    $state = '';
-                    $zip = '';
-                    $birthday = '';
+                    throw new Exception('Database Error Found!');    
                     
                 }                
             }
             else
             {
-                //$fullname = addAddress($fullname, $email, $addressline1, $city, $state, $zip, $birthday);
+                throw new Exception('Submit Errors Found!');  
                 
             }
-        
+        }      
+        catch (Exception $e) {
+            $alert = false;
+            $errorMessage = $ERRmessage;  
         }
+    }
         else
         {
             $fullname = '';

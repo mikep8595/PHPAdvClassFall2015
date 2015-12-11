@@ -13,12 +13,12 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">REST API</a>
+                <a class="navbar-brand" href="#">Contacts</a>
               </div>
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav">
-                    <li><a href="./index.php">File List</a></li>
-                    <li><a href="./add-address.php">Add File</a></li>                   
+                    <li><a href="./index.php">List</a></li>
+                    <li><a href="./add-address.php">Add Contact</a></li>                   
                   </ul>
               </div>
             </div>
