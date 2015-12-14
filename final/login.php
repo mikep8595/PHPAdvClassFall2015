@@ -8,6 +8,7 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title></title>
+        <?php include'./templates/head-links.php'; ?>
     </head>
     <body>
         <?php
@@ -40,10 +41,7 @@ and open the template in the editor.
         }
         
         ?>
-        <form action="#" method="post">   
-            Email: <input type="text" name="email" value="<?php echo $email; ?>" /> <br />
-            Password: <input type="password" name="password" value="" /> <br />
-           <input type="submit" value="submit" class="btn btn-primary" />
-        </form>
+        <?php include './templates/nav-bar.php'; ?>
+        <?php include './templates/login-form.html.php'; ?>
     </body>
 </html>

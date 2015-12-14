@@ -31,15 +31,16 @@ class Login {
             ":email" => $email,            
         );
         
-        if ($stmt->execute($binds) && $stmt->rowCount() > 1) {
+        if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
             $results = $stmt->fetch(PDO::FETCH_ASSOC);
             if (password_verify($password, $results['password'])){
                 
                 return $results['user_id'];
             }
         }
-        
+        else{
         return 0;
+        }
     }
 }
 ?>

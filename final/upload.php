@@ -10,6 +10,8 @@ $status_codes = array(
 
 $status = 200;
 
+require_once './autoload.php'; 
+
 /*
  * make sure php_fileinfo.dll extension is enable in php.ini
  */
@@ -69,11 +71,12 @@ try {
 // DO NOT USE $_FILES['upfile']['name'] WITHOUT ANY VALIDATION !!
 // On this example, obtain safe unique name from its binary data.
 
+    $ID = filter_input(INPUT_POST, 'IDinput');
     $salt = uniqid(mt_rand(), true);
     $fileName = 'img_' . sha1($salt . sha1_file($_FILES['upfile']['tmp_name']));
     
-    if (!is_dir('./uploads')) {
-        mkdir('./uploads');
+    if (!is_dir('./uploads'.$ID)) {
+        mkdir('./uploads/'.$ID);
     }
 
     $location = sprintf('./uploads/%s.%s', $fileName, $ext);
@@ -127,7 +130,7 @@ try {
 
 
 
-
+    $id = filter_input(INPUT_POST, 'ID');
     $memetop = filter_input(INPUT_POST, 'memetop');
     $memebottom = filter_input(INPUT_POST, 'memebottom');
 //Font Color (white in this case)
@@ -194,7 +197,15 @@ try {
       }
 
      */
-
+    $addPhoto = new AddPhoto();
+    
+    if ($addPhoto->add($id, $fileName)){
+        
+    }
+    else{
+        throw new RuntimeException('Failed to add to database.');
+    }
+    
     $message = 'File is uploaded successfully.';
 } catch (RuntimeException $e) {
 
